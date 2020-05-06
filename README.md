@@ -1,0 +1,2 @@
+# manageiq-ansible-test
+test
