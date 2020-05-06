@@ -1,0 +1,42 @@
+---
+# tasks file for nats
+- name: install unzip
+  apt: 
+    pkg: unzip
+    state: latest
+    update_cache: yes
+
+- name: create install directory
+  file:
+     path: "{{ nats_install_dir }}"
+     state: directory
+
+- name: Install nats
+  unarchive:
+     src: "nats-server-{{ nats_version }}-linux-amd64.zip"
+     dest: "{{ nats_install_dir }}"
+
+- name: create binary link
+  file:
+     src: "{{ nats_install_dir }}/nats-server-{{ nats_version }}-linux-amd64/nats-server"
+     dest: /usr/bin/nats-server
+     state: link
+
+- name: copy the configuration file
+  copy:
+     src: server.conf
+     dest: "{{ nats_install_dir }}/server.conf"
+
+- name: copy service file
+  template:
+     src: nats.service.j2
+     dest: /etc/systemd/system/nats.service
+     mode: 644
+     owner: root
+     group: root
+
+- name: start nats service
+  service: 
+     name: nats
+     state: started
+     enabled: yes

@@ -1,0 +1,5 @@
+---
+# vars file for nats
+
+nats_install_dir : /usr/share/nats
+nats_version: v2.0.4

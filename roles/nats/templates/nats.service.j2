@@ -1,0 +1,26 @@
+### BEGIN INIT INFO
+# Provides:          nats
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: nats server
+# Description:       nats messaging server
+### END INIT INFO
+
+[Unit]
+Description=nats messaging server
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/nats-server -c { nats_install_dir }/server.conf
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+KillSignal=SIGTERM
+Restart=on-failure
+RestartSec=42s
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target
