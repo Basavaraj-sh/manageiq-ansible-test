@@ -1,10 +1,10 @@
 ---
 # tasks file for nats
-- name: install unzip
-  apt: 
-    pkg: unzip
-    state: latest
-    update_cache: yes
+#- name: install unzip
+#  apt: 
+#    pkg: unzip
+#    state: latest
+#    update_cache: yes
 
 - name: create install directory
   file:
